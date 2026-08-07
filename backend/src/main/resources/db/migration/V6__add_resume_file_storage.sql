@@ -1,0 +1,3 @@
+ALTER TABLE resumes
+    ADD COLUMN IF NOT EXISTS file_data BYTEA,
+    ADD COLUMN IF NOT EXISTS file_type VARCHAR(50);
