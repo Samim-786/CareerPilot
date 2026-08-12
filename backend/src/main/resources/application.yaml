@@ -61,4 +61,4 @@ app:
     secret: ${JWT_SECRET}
     expiration-ms: ${JWT_EXPIRATION_MS}
   cors:
-    allowed-origins: http://localhost:5173
+     allowed-origins: ${CORS_ALLOWED_ORIGINS:http://localhost:5173}
