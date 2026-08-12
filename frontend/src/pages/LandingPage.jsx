@@ -9,6 +9,12 @@ export default function LandingPage() {
   const [visible, setVisible] = useState(false)
 
   const { isAuthenticated, loading } = useAuth();
+  useEffect(() => {
+    setTimeout(() => setVisible(true), 100)
+    const handleScroll = () => setScrollY(window.scrollY)
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
 
   if (loading) {
     return null;
@@ -18,12 +24,6 @@ export default function LandingPage() {
     return <Navigate to="/dashboard" replace />;
   }
 
-  useEffect(() => {
-    setTimeout(() => setVisible(true), 100)
-    const handleScroll = () => setScrollY(window.scrollY)
-    window.addEventListener('scroll', handleScroll)
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
 
   return (
     <div style={{ minHeight: '100vh', backgroundColor: '#0d0f1a', color: 'white', fontFamily: 'Inter, sans-serif', overflowX: 'hidden' }}>
