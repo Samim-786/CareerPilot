@@ -53,13 +53,17 @@ public class ResumeAiService {
                         extractedText = new String(file.getBytes());
                 }
 
+                log.info("Before vector store");
                 // Store in vector DB for RAG
                 ragService.storeDocuments(extractedText, Map.of(
                                 "userId", user.getEmail(),
                                 "type", "resume",
                                 "fileName", file.getOriginalFilename()));
 
+                log.info("After vector store");                
+
                 // Ask AI to extract skills
+                log.info("Before skill extraction");
                 String skillsPrompt = """
                                 Extract only the technical skills from this resume text.
                                 Return them as a comma separated list. Nothing else.
