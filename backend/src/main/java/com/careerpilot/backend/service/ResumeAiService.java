@@ -42,8 +42,11 @@ public class ResumeAiService {
                         // Extract text from PDF
                         try (org.apache.pdfbox.pdmodel.PDDocument document = org.apache.pdfbox.Loader
                                         .loadPDF(file.getBytes())) {
-                                org.apache.pdfbox.text.PDFTextStripper stripper = new org.apache.pdfbox.text.PDFTextStripper();
-                                extractedText = stripper.getText(document);
+                             org.apache.pdfbox.text.PDFTextStripper stripper = new org.apache.pdfbox.text.PDFTextStripper();
+                             extractedText = stripper.getText(document);
+                                log.info("Extracted text length: {}", extractedText.length());
+
+                                log.info("Extracted text preview: {}",extractedText.substring(0,Math.min(500, extractedText.length())));
                         }
                 } else {
                         // Plain text file
@@ -70,7 +73,7 @@ public class ResumeAiService {
                                 .user(skillsPrompt)
                                 .call()
                                 .content();
-
+                log.info("Extracted skills: {}", skillsRaw);
                 String[] skills = java.util.Arrays.stream(skillsRaw.split(","))
                                 .map(String::trim)
                                 .map(s -> s.replaceAll("[.]+$", ""))
