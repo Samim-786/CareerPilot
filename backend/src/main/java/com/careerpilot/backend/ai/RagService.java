@@ -21,15 +21,24 @@ public class RagService {
     private final ChatClient.Builder chatClientBuilder;
 
     public void storeDocuments(String text, Map<String, Object> metadata) {
+    try {
         List<String> chunks = splitIntoChunks(text, 500);
 
         List<Document> documents = chunks.stream()
                 .map(chunk -> new Document(chunk, metadata))
                 .collect(Collectors.toList());
 
+        log.info("About to store {} chunks", documents.size());
+
         vectorStore.add(documents);
+
         log.info("Stored {} chunks in vector store", documents.size());
+
+    } catch (Exception e) {
+        log.error("VECTOR STORE ERROR", e);
+        throw e;
     }
+}
 
     public List<Document> searchSimilarChunks(String query, String userId, int topK) {
 
