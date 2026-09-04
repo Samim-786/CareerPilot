@@ -45,8 +45,8 @@ public class RagService {
         return vectorStore.similaritySearch(
                 SearchRequest.builder()
                         .query(query)
-                        .topK(topK)
-                        .similarityThreshold(0.3)
+                        .topK(10)
+                        .similarityThreshold(0.01)
                         .filterExpression("userId == '" + userId + "'")
                         .build());
     }
